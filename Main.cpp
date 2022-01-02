@@ -18,7 +18,7 @@ const int vSpace = 5;
 const float movePPS = 0.5;
 
 const Vector2f BallStart(400, 525);
-const float BallSpeed = 100;
+const float BallSpeed = 1000;
 
 const int32 velocityIterations = 6;
 const int32 positionIterations = 2;
@@ -45,6 +45,7 @@ void MakeBounds(b2World& world, float x, float y, float width, float height) {
     groundBox->SetAsBox(width, height);
     b2FixtureDef fixDef;
     fixDef.shape = groundBox;
+    fixDef.friction = 0;
     b2Fixture* fixture = groundBody->CreateFixture(&fixDef);
 }
 
@@ -83,7 +84,7 @@ int main()
     Clock clock;
     Time lastTime = clock.getElapsedTime();
     
-    ball.Reset(BallStart, (rand0to1() * 160) - 80, BallSpeed); // -80 to 80
+    ball.Reset(BallStart, (rand0to1()*90)-45, BallSpeed); // -80 to 80
     while (window.isOpen())
     {
         sf::Event event;
