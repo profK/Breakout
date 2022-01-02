@@ -43,6 +43,7 @@ void Ball::Reset(Vector2f position, float angleDeg, float speed)
 {
 	setPosition(position);
 	b2Vec2 linearVelocity = b2Vec2(cos(angleDeg * M_PI / 180), sin(angleDeg * M_PI / 180));
+	linearVelocity *= speed;
 	body->SetLinearVelocity(linearVelocity);
 	body->SetTransform(b2Vec2(position.x, position.y), 0);
 }

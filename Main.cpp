@@ -4,6 +4,8 @@
 #include "Gun.h"
 #include "Ball.h"
 #include "Box2D.h"
+#include <chrono>
+#include <thread>
 
 using namespace sf;
 using namespace std;
@@ -16,10 +18,11 @@ const int vSpace = 5;
 const float movePPS = 0.5;
 
 const Vector2f BallStart(400, 525);
-const float BallSpeed = 1;
+const float BallSpeed = 100;
 
 const int32 velocityIterations = 6;
 const int32 positionIterations = 2;
+const int32 frameMinMS = 1000 / 60; // 1/60th of a sec in ms
 
 void AddWall(list<Brick>& actors) {
     Vector2f brickSize(brick_width, brick_height);
@@ -60,7 +63,7 @@ int main()
     b2World world(gravity);
     // add collision bounds at edges of screen
     MakeBounds(world, 0, 0, 800, 6); //top
-    MakeBounds(world, 0, 400, 800, 6); // bottom
+    MakeBounds(world, 0, 594, 800, 6); // bottom
     MakeBounds(world, 0, 0, 6, 600); //left
     MakeBounds(world, 794, 0, 6, 600); // right
     
@@ -86,6 +89,12 @@ int main()
         sf::Event event;
         Time currentTime = clock.getElapsedTime();
         long elapsedTimeMS = (currentTime.asMilliseconds() - lastTime.asMilliseconds());
+        //limit to 60fps
+        if (elapsedTimeMS < frameMinMS){
+            std::this_thread::sleep_for(std::chrono::milliseconds(frameMinMS - elapsedTimeMS));
+            currentTime = clock.getElapsedTime();
+        }
+           
         lastTime = currentTime;
         while (window.pollEvent(event))
         {
@@ -103,8 +112,7 @@ int main()
             gun.setPosition(gun.getPosition() + Vector2f(movePPS * elapsedTimeMS, 0));
         }
         // tick physics
-        float deltaSeconds = ((float)elapsedTimeMS) / 1000;
-        world.Step(deltaSeconds, velocityIterations, positionIterations);
+        world.Step(((float32)frameMinMS)/1000.0, velocityIterations, positionIterations);
         ball.Update(); // update visible ball posituon from physics
         // game state render
         window.clear();
@@ -115,6 +123,7 @@ int main()
         window.draw(gun);
         window.draw(ball);
         window.display();
+        
     }
 
     return 0;
