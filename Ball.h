@@ -1,15 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Box2D/Box2D.h"
+#include "PhysicsObject.h"
 
 using namespace sf;
 
 class Ball :
-    public CircleShape
+    public CircleShape, public PhysicsObject
 {
 private:
     
-    b2Body* body;
     bool visible;
 
 public:

@@ -4,8 +4,11 @@
 #include "Gun.h"
 #include "Ball.h"
 #include "Box2D.h"
-#include <chrono>
+#include <chrono>S
 #include <thread>
+#include "Boundary.h"
+#include "PhysicsObject.h"
+
 
 using namespace sf;
 using namespace std;
@@ -22,7 +25,9 @@ const float BallSpeed = 1000;
 
 const int32 velocityIterations = 6;
 const int32 positionIterations = 2;
-const int32 frameMinMS = 1000 / 60; // 1/60th of a sec in ms
+const int32 frameMinMS = 1000 / 30; // 1/60th of a sec in ms
+
+
 
 void AddWall(list<Brick>& actors) {
     Vector2f brickSize(brick_width, brick_height);
@@ -37,6 +42,7 @@ void AddWall(list<Brick>& actors) {
     }
 }
 
+/* Dino code
 void MakeBounds(b2World& world, float x, float y, float width, float height) {
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(x+(width/2), y+(height/2));
@@ -46,8 +52,9 @@ void MakeBounds(b2World& world, float x, float y, float width, float height) {
     b2FixtureDef fixDef;
     fixDef.shape = groundBox;
     fixDef.friction = 0;
+   
     b2Fixture* fixture = groundBody->CreateFixture(&fixDef);
-}
+}*/
 
 
 
@@ -63,10 +70,10 @@ int main()
     b2Vec2 gravity(0.0f, 0.0f); // no gravity
     b2World world(gravity);
     // add collision bounds at edges of screen
-    MakeBounds(world, 0, 0, 800, 6); //top
-    MakeBounds(world, 0, 594, 800, 6); // bottom
-    MakeBounds(world, 0, 0, 6, 600); //left
-    MakeBounds(world, 794, 0, 6, 600); // right
+    Boundary top(world, Color::Green, Vector2f( 0, 0), Vector2f(800, 6)); //top
+    Boundary bottom (world, Color::Green, Vector2f(0, 594),Vector2f( 800, 6)); // bottom
+    Boundary left(world,Color::Green,Vector2f( 0, 0), Vector2f( 6, 600)); //left
+    Boundary right(world, Color::Green, Vector2f(794, 0), Vector2f( 6, 600)); // right
     
     // add bricks
     list<Brick> bricks;
@@ -121,6 +128,10 @@ int main()
         for (it = bricks.begin(); it != bricks.end(); ++it) {
             window.draw(*it);
         }
+        window.draw(top);
+        window.draw(bottom);
+        window.draw(left);
+        window.draw(right);
         window.draw(gun);
         window.draw(ball);
         window.display();

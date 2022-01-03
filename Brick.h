@@ -4,6 +4,7 @@ using namespace sf;
 
 class Brick : public RectangleShape
 {
+
 public:
 	Brick(Color color, Vector2f size, Vector2f position);
 };
