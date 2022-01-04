@@ -9,7 +9,7 @@ class Ball :
     public CircleShape, public PhysicsObject
 {
 private:
-    
+    float radius;
     bool visible;
 
 public:

@@ -13,8 +13,8 @@
 using namespace sf;
 using namespace std;
 
-const int brick_width = 45;
-const int brick_height = 15;
+const int brick_width = 60;
+const int brick_height = 30;
 const int hSpace = 5;
 const int vSpace = 5;
 
@@ -34,8 +34,8 @@ void AddWall(b2World& world, list<Brick*>& actors) {
     for (int y = 0; y < 8; y++) {
         for (int x = 0; x < 10; x++) {
             Vector2f pos(
-                150 + (x * (brick_width + hSpace)),
-                100 + (y * (brick_height + vSpace))
+                75 + (x * (brick_width + hSpace)),
+                50 + (y * (brick_height + vSpace))
                 );
             actors.push_back(new Brick(world, actors, Color::Green, pos,brickSize));
         }
@@ -84,7 +84,7 @@ int main()
     AddWall(world,bricks);
 
     Gun gun(Vector2f(400, 590));
-    Ball ball(world,2, BallStart);
+    Ball ball(world,8, BallStart);
     
     // start physics
     float timeStep = 1.0f / 60.0f;

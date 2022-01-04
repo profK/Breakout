@@ -17,14 +17,14 @@ PhysicsObject::PhysicsObject(b2World& world, ObjectType otype, Vector2f startPos
 	else {
 		bodyDef.type = b2_staticBody;
 	}
-	bodyDef.position.Set(startPosition.x, startPosition.y);
+	bodyDef.position.Set(startPosition.x+(size.x/2), startPosition.y+(size.y/2));
 	bodyDef.linearDamping = 0.0f;
 
 	body = world.CreateBody(&bodyDef);
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(size.x,size.y);
+	b2PolygonShape box;
+	box.SetAsBox(size.x/2,size.y/2);
 	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
+	fixtureDef.shape = &box;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
 	fixtureDef.restitution = 1.0f;
