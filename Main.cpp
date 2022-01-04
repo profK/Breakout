@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include "Brick.h"
-#include "Gun.h"
+#include "Paddle.h"
 #include "Ball.h"
 #include "Box2D.h"
 #include <chrono>S
@@ -18,10 +18,10 @@ const int brick_height = 30;
 const int hSpace = 5;
 const int vSpace = 5;
 
-const float movePPS = 0.5;
+
 
 const Vector2f BallStart(400, 525);
-const float BallSpeed = 1000;
+const float BallSpeed =1;
 
 const int32 velocityIterations = 6;
 const int32 positionIterations = 2;
@@ -83,7 +83,7 @@ int main()
      
     AddWall(world,bricks);
 
-    Gun gun(Vector2f(400, 590));
+    Paddle paddle(world,Color::White,Vector2f(400,550),Vector2f(60,20));
     Ball ball(world,8, BallStart);
     
     // start physics
@@ -102,8 +102,8 @@ int main()
         if (elapsedTimeMS < frameMinMS){
             std::this_thread::sleep_for(std::chrono::milliseconds(frameMinMS - elapsedTimeMS));
             currentTime = clock.getElapsedTime();
+            elapsedTimeMS = (currentTime.asMilliseconds() - lastTime.asMilliseconds());
         }
-           
         lastTime = currentTime;
         while (window.pollEvent(event))
         {
@@ -111,15 +111,8 @@ int main()
                 window.close();
         }
         // game state update
-        bool leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
-        bool rightArrow = Keyboard::isKeyPressed(Keyboard::Right);
-        bool space = Keyboard::isKeyPressed(Keyboard::Space);
-        if (leftArrow && !rightArrow) {
-            gun.setPosition(gun.getPosition() + Vector2f(-movePPS * elapsedTimeMS, 0));
-        }
-        if (rightArrow && !leftArrow) {
-            gun.setPosition(gun.getPosition() + Vector2f(movePPS * elapsedTimeMS, 0));
-        }
+        // update paddle
+        paddle.Update(elapsedTimeMS);
         // tick physics
         world.Step(((float32)frameMinMS)/1000.0, velocityIterations, positionIterations);
         ball.Update(); // update visible ball posituon from physics
@@ -146,7 +139,7 @@ int main()
         window.draw(bottom);
         window.draw(left);
         window.draw(right);
-        window.draw(gun);
+        window.draw(paddle);
         window.draw(ball);
         window.display();
         

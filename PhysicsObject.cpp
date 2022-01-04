@@ -3,15 +3,17 @@
 using namespace sf;
 using namespace std;
 
+const float boxScaleFactor= 100;
 
 PhysicsObject::PhysicsObject(b2World& world, ObjectType otype, Vector2f startPosition, Vector2f size):
 	world(world)
 {
-	
+	startPosition /= boxScaleFactor;
+	size /= boxScaleFactor;
 	objType = otype;
 	// setup phsics
 	b2BodyDef bodyDef;
-	if (otype == BallType) {
+	if ((otype == BallType)||(otype == PaddleType)) {
 		bodyDef.type = b2_dynamicBody;
 	}
 	else {
@@ -26,7 +28,6 @@ PhysicsObject::PhysicsObject(b2World& world, ObjectType otype, Vector2f startPos
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &box;
 	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.3f;
 	fixtureDef.restitution = 1.0f;
 	fixtureDef.friction = 0;
 	fixtureDef.userData = this;
@@ -63,4 +64,16 @@ void PhysicsObject::CollidedWith(PhysicsObject& otherObject)
 	cout << " collided with obj of type ";
 	otherObject.PrintObjectTypeName();
 	cout << endl;
+}
+
+Vector2f PhysicsObject::GetScaledPosition()
+{
+	b2Vec2 pos = body->GetPosition();
+	return Vector2f(pos.x * boxScaleFactor, pos.y * boxScaleFactor);
+}
+
+void PhysicsObject::SetScaledPosition(Vector2f pos)
+{
+	b2Vec2 bPos = b2Vec2(pos.x / boxScaleFactor,pos.y / boxScaleFactor);
+	body->SetTransform(bPos, 0);
 }

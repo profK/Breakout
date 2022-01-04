@@ -6,7 +6,7 @@
 using namespace sf;
 
 enum ObjectType {
-	BallType, WallType, BrickType,
+	BallType, WallType, BrickType,PaddleType
 };
 
 
@@ -24,6 +24,7 @@ public:
 	ObjectType GetObjType();
 	void PrintObjectTypeName();
 	virtual void CollidedWith(PhysicsObject& otherObject);
-	
+	Vector2f GetScaledPosition();
+	void SetScaledPosition(Vector2f pos);
 };
 
