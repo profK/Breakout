@@ -7,6 +7,6 @@ class Boundary :
     public RectangleShape,public PhysicsObject
 {
 public:
-    Boundary(b2World& world,Color color, Vector2f size, Vector2f position);
+    Boundary(b2World& world,Color color, Vector2f position, Vector2f size);
 };
 

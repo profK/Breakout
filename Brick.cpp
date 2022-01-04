@@ -9,6 +9,7 @@ Brick::Brick(b2World& world, list<Brick*>& actors, Color color, Vector2f positio
 	setFillColor(color);
 	setSize(size);
 	setPosition(position);
+	
 }
 
 void Brick::CollidedWith(PhysicsObject& otherObject)

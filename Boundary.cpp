@@ -1,7 +1,7 @@
 #include "Boundary.h"
 
-Boundary::Boundary(b2World& world, Color color, Vector2f size, Vector2f position):
-	PhysicsObject(world,WallType,size,position)
+Boundary::Boundary(b2World& world, Color color, Vector2f position, Vector2f size):
+	PhysicsObject(world,WallType,position,size)
 {
 	setFillColor(color);
 	setSize(size);
