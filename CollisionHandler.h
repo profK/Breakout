@@ -4,8 +4,8 @@
 class CollisionHandler :
     public b2ContactListener
 {
-    void BeginContact(b2Contact* contact) {
-
-    }
+public:
+    CollisionHandler(b2World& world);
+    void BeginContact(b2Contact* contact); // overridden from parent
 };
 

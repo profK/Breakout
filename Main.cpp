@@ -7,7 +7,7 @@
 #include <chrono>S
 #include <thread>
 #include "Boundary.h"
-#include "PhysicsObject.h"
+#include "CollisionHandler.h"
 
 
 using namespace sf;
@@ -29,7 +29,7 @@ const int32 frameMinMS = 1000 / 30; // 1/60th of a sec in ms
 
 
 
-void AddWall(list<Brick>& actors) {
+void AddWall(b2World& world, list<Brick*>& actors) {
     Vector2f brickSize(brick_width, brick_height);
     for (int y = 0; y < 8; y++) {
         for (int x = 0; x < 10; x++) {
@@ -37,7 +37,7 @@ void AddWall(list<Brick>& actors) {
                 150 + (x * (brick_width + hSpace)),
                 100 + (y * (brick_height + vSpace))
                 );
-            actors.push_back(Brick(Color::Green, brickSize, pos));
+            actors.push_back(new Brick(world, Color::Green, brickSize, pos));
         }
     }
 }
@@ -69,21 +69,21 @@ int main()
     // set up physics world
     b2Vec2 gravity(0.0f, 0.0f); // no gravity
     b2World world(gravity);
+    // adde collision logic
+    CollisionHandler collisionHandler(world);
     // add collision bounds at edges of screen
-    Boundary top(world, Color::Green, Vector2f( 0, 0), Vector2f(800, 6)); //top
-    Boundary bottom (world, Color::Green, Vector2f(0, 594),Vector2f( 800, 6)); // bottom
+    Boundary top = Boundary(world, Color::Green, Vector2f( 0, 0), Vector2f(800, 6)); //top
+    Boundary bottom = Boundary(world, Color::Green, Vector2f(0, 594),Vector2f( 800, 6)); // bottom
     Boundary left(world,Color::Green,Vector2f( 0, 0), Vector2f( 6, 600)); //left
     Boundary right(world, Color::Green, Vector2f(794, 0), Vector2f( 6, 600)); // right
     
     // add bricks
-    list<Brick> bricks;
-
-    AddWall(bricks);
+    list<Brick*> bricks;
+     
+    AddWall(world,bricks);
 
     Gun gun(Vector2f(400, 590));
     Ball ball(world,2, BallStart);
-
-    
     
     // start physics
     float timeStep = 1.0f / 60.0f;
@@ -124,9 +124,10 @@ int main()
         ball.Update(); // update visible ball posituon from physics
         // game state render
         window.clear();
-        list <Brick> ::iterator it;
+        list <Brick*> ::iterator it;
         for (it = bricks.begin(); it != bricks.end(); ++it) {
-            window.draw(*it);
+            Brick* bPtr = *it;
+            window.draw(*bPtr);
         }
         window.draw(top);
         window.draw(bottom);

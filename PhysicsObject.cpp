@@ -1,6 +1,8 @@
 #include "PhysicsObject.h"
-
+#include <iostream>
 using namespace sf;
+using namespace std;
+
 
 PhysicsObject::PhysicsObject(b2World& world, ObjectType otype, Vector2f startPosition, Vector2f size):
 	world(world)
@@ -34,4 +36,31 @@ PhysicsObject::PhysicsObject(b2World& world, ObjectType otype, Vector2f startPos
 ObjectType PhysicsObject::GetObjType()
 {
 	return objType;
+}
+
+void PhysicsObject::PrintObjectTypeName()
+{
+	switch (objType) {
+	case BallType:
+		cout <<string("Ball");
+		break;
+	case WallType:
+		cout<< string("Wall");
+		break;
+	case BrickType:
+		cout<< string("Brick");
+		break;
+	default:
+		cout<< string("Unknown Type");
+	}
+}
+
+
+void PhysicsObject::CollidedWith(PhysicsObject& otherObject)
+{
+	cout << "Obj of type ";
+	PrintObjectTypeName();
+	cout << " collided with obj of type ";
+	otherObject.PrintObjectTypeName();
+	cout << endl;
 }
