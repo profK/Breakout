@@ -37,7 +37,7 @@ void AddWall(b2World& world, list<Brick*>& actors) {
                 150 + (x * (brick_width + hSpace)),
                 100 + (y * (brick_height + vSpace))
                 );
-            actors.push_back(new Brick(world, Color::Green, brickSize, pos));
+            actors.push_back(new Brick(world, actors, Color::Green, pos,brickSize));
         }
     }
 }
@@ -79,6 +79,7 @@ int main()
     
     // add bricks
     list<Brick*> bricks;
+    list<Brick*> removalList;
      
     AddWall(world,bricks);
 
@@ -122,9 +123,21 @@ int main()
         // tick physics
         world.Step(((float32)frameMinMS)/1000.0, velocityIterations, positionIterations);
         ball.Update(); // update visible ball posituon from physics
+        list <Brick*> ::iterator it;
+        removalList.clear(); // empty the removal list
+        // looP and let bricks add themselves rto removal list
+        for (it = bricks.begin(); it != bricks.end(); ++it) {
+            Brick* bPtr = *it;
+            bPtr->Update(removalList);
+        }
+        // remove bricks that need removal
+        for (it = removalList.begin(); it != removalList.end(); ++it) {
+            Brick* bPtr = *it;
+            bricks.remove(bPtr);
+        }
+
         // game state render
         window.clear();
-        list <Brick*> ::iterator it;
         for (it = bricks.begin(); it != bricks.end(); ++it) {
             Brick* bPtr = *it;
             window.draw(*bPtr);
