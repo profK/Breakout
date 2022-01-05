@@ -116,23 +116,20 @@ int main()
         // tick physics
         world.Step(((float32)frameMinMS)/1000.0, velocityIterations, positionIterations);
         ball.Update(); // update visible ball posituon from physics
-        list <Brick*> ::iterator it;
         removalList.clear(); // empty the removal list
         // looP and let bricks add themselves rto removal list
-        for (it = bricks.begin(); it != bricks.end(); ++it) {
-            Brick* bPtr = *it;
+      
+        for(auto bPtr : bricks){
             bPtr->Update(removalList);
         }
         // remove bricks that need removal
-        for (it = removalList.begin(); it != removalList.end(); ++it) {
-            Brick* bPtr = *it;
+        for (auto bPtr : bricks) {
             bricks.remove(bPtr);
         }
 
         // game state render
         window.clear();
-        for (it = bricks.begin(); it != bricks.end(); ++it) {
-            Brick* bPtr = *it;
+        for (auto bPtr : bricks) {
             window.draw(*bPtr);
         }
         window.draw(top);
