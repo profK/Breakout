@@ -1,7 +1,7 @@
 #include "paddle.h"
 
 Paddle::Paddle(b2World& world, Color color, Vector2f pos, Vector2f size):
-	PhysicsObject(world, PaddleType,pos, size)
+	PhysicsObject(world, PaddleType,pos-Vector2f(size.x/2,size.y/2), size)
 {
 	setFillColor(color);
 	setSize(size);
@@ -27,5 +27,5 @@ void Paddle::Update(long deltaTime)
     Vector2f sfmlPos = getPosition();
     Vector2f sfmlSize = getSize();
 
-    SetScaledPosition(Vector2f(sfmlPos.x - (sfmlSize.x/2), sfmlPos.y));
+    SetScaledPosition(Vector2f(sfmlPos.x + (sfmlSize.x/2), sfmlPos.y));
 }
