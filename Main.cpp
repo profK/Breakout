@@ -123,7 +123,7 @@ int main()
             bPtr->Update(removalList);
         }
         // remove bricks that need removal
-        for (auto bPtr : bricks) {
+        for (auto bPtr : removalList) {
             bricks.remove(bPtr);
         }
 
