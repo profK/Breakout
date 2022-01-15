@@ -19,5 +19,6 @@ public:
     void Show(bool b);
     bool IsVisible();
     void Reset(Vector2f position, float angleDeg,float speed);
+    void CollidedWith(PhysicsObject& otherObject);
 };
 

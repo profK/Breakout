@@ -77,3 +77,16 @@ void PhysicsObject::SetScaledPosition(Vector2f pos)
 	b2Vec2 bPos = b2Vec2(pos.x / boxScaleFactor,pos.y / boxScaleFactor);
 	body->SetTransform(bPos, 0);
 }
+
+Vector2f PhysicsObject::GetMotionDirection()
+{
+	b2Vec2 dir = body->GetLinearVelocity();
+	dir.Normalize();
+	return Vector2f(dir.x, dir.y);
+}
+
+void PhysicsObject::ApplyScaledForce(Vector2f forceVector)
+{
+	b2Vec2 scaledForce(forceVector.x * boxScaleFactor, forceVector.y * boxScaleFactor);
+	body->ApplyForce(scaledForce, body->GetPosition(),true);
+}
