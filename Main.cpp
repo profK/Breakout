@@ -23,7 +23,7 @@ const int vSpace = 5;
 
 
 const Vector2f BallStart(400, 525);
-const float BallSpeed =1;
+const float BallSpeed =0.1;
 
 const int32 velocityIterations = 6;
 const int32 positionIterations = 2;
