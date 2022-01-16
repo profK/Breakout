@@ -31,7 +31,7 @@ const int32 frameMinMS = 1000 / 30; // 1/60th of a sec in ms
 
 
 
-void AddWall(b2World& world, list<Brick*>& actors) {
+void AddWall(b2World& world, Score &score, list<Brick*>& actors) {
     Vector2f brickSize(brick_width, brick_height);
     for (int y = 0; y < 8; y++) {
         for (int x = 0; x < 10; x++) {
@@ -39,7 +39,7 @@ void AddWall(b2World& world, list<Brick*>& actors) {
                 75 + (x * (brick_width + hSpace)),
                 50 + (y * (brick_height + vSpace))
                 );
-            actors.push_back(new Brick(world, actors, Color::Green, pos,brickSize));
+            actors.push_back(new Brick(world, score, Color::Green, pos,brickSize));
         }
     }
 }
@@ -82,17 +82,17 @@ int main()
     // add bricks
     list<Brick*> bricks;
     list<Brick*> removalList;
-     
-    AddWall(world,bricks);
-
-    Paddle paddle(world,Color::White,Vector2f(400,550),Vector2f(60,20));
-    Ball ball(world,8, BallStart);
     Font font;
     if (!font.loadFromFile("arial.ttf")) {
         cout << "Error: Could not load font" << endl;
         exit(1);
     }
     Score score(Vector2f(400, 10), font, 30);
+    AddWall(world,score, bricks);
+
+    Paddle paddle(world,Color::White,Vector2f(400,550),Vector2f(60,20));
+    Ball ball(world,8, BallStart);
+ 
     
     // start physics
     float timeStep = 1.0f / 60.0f;
@@ -113,6 +113,7 @@ int main()
             elapsedTimeMS = (currentTime.asMilliseconds() - lastTime.asMilliseconds());
         }
         lastTime = currentTime;
+        world.Step(((float32)frameMinMS) / 1000.0, velocityIterations, positionIterations);
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -122,7 +123,6 @@ int main()
         // update paddle
         paddle.Update(elapsedTimeMS);
         // tick physics
-        world.Step(((float32)frameMinMS)/1000.0, velocityIterations, positionIterations);
         ball.Update(); // update visible ball posituon from physics
         removalList.clear(); // empty the removal list
         // looP and let bricks add themselves rto removal list
