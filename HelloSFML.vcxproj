@@ -157,6 +157,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="paddle.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -166,9 +167,15 @@
     <ClInclude Include="Gun.h" />
     <ClInclude Include="paddle.h" />
     <ClInclude Include="PhysicsObject.h" />
+    <ClInclude Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="C:\Users\jpkessel\Downloads\arial\arial.ttf">
+      <DeploymentContent>true</DeploymentContent>
+    </Font>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

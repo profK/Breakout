@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <list>
 #include "Brick.h"
@@ -8,6 +9,7 @@
 #include <thread>
 #include "Boundary.h"
 #include "CollisionHandler.h"
+#include "Score.h"
 
 
 using namespace sf;
@@ -85,6 +87,12 @@ int main()
 
     Paddle paddle(world,Color::White,Vector2f(400,550),Vector2f(60,20));
     Ball ball(world,8, BallStart);
+    Font font;
+    if (!font.loadFromFile("arial.ttf")) {
+        cout << "Error: Could not load font" << endl;
+        exit(1);
+    }
+    Score score(Vector2f(400, 10), font, 30);
     
     // start physics
     float timeStep = 1.0f / 60.0f;
@@ -138,6 +146,7 @@ int main()
         window.draw(right);
         window.draw(paddle);
         window.draw(ball);
+        window.draw(score);
         window.display();
         
     }
