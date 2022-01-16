@@ -29,13 +29,19 @@ bool Ball::IsVisible()
 	return visible;
 }
 
-void Ball::CollidedWith(PhysicsObject& otherObject){
+void Ball::CollidedWith(PhysicsObject& otherObject) {
+
 	if (otherObject.GetObjType() == BrickType) {
 		//increase speed
 		Vector2f direction = GetMotionDirection();
 		Vector2f force(direction.x * 0.01, direction.y * 0.01);
 		ApplyScaledForce(force);
 	}
+	else if (otherObject.GetObjType() == ExitType) {
+		visible = false;
+		body->SetLinearVelocity(b2Vec2(0, 0));
+	}
+	
 }
 
 void Ball::Reset(Vector2f position, float angleDeg, float speed) 

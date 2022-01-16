@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="BottomBoundary.cpp" />
     <ClCompile Include="Boundary.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="CollisionHandler.cpp" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="BottomBoundary.h" />
     <ClInclude Include="Boundary.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="CollisionHandler.h" />

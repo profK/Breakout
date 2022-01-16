@@ -10,7 +10,7 @@
 #include "Boundary.h"
 #include "CollisionHandler.h"
 #include "Score.h"
-
+#include "BottomBoundary.h"
 
 using namespace sf;
 using namespace std;
@@ -75,7 +75,7 @@ int main()
     CollisionHandler collisionHandler(world);
     // add collision bounds at edges of screen
     Boundary top = Boundary(world, Color::Green, Vector2f( 0, 0), Vector2f(800, 6)); //top
-    Boundary bottom = Boundary(world, Color::Green, Vector2f(0, 594),Vector2f( 800, 6)); // bottom
+    BottomBoundary bottom = BottomBoundary(world, Color::Green, Vector2f(0, 594),Vector2f( 800, 6)); // bottom
     Boundary left(world,Color::Green,Vector2f( 0, 0), Vector2f( 6, 600)); //left
     Boundary right(world, Color::Green, Vector2f(794, 0), Vector2f( 6, 600)); // right
     
@@ -93,7 +93,6 @@ int main()
     Paddle paddle(world,Color::White,Vector2f(400,550),Vector2f(60,20));
     Ball ball(world,8, BallStart);
  
-    
     // start physics
     float timeStep = 1.0f / 60.0f;
 
@@ -145,7 +144,10 @@ int main()
         window.draw(left);
         window.draw(right);
         window.draw(paddle);
-        window.draw(ball);
+        if (ball.IsVisible()) {
+            window.draw(ball);
+        }
+       
         window.draw(score);
         window.display();
         

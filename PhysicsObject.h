@@ -6,7 +6,7 @@
 using namespace sf;
 
 enum ObjectType {
-	BallType, WallType, BrickType,PaddleType
+	BallType, WallType, BrickType,PaddleType,ExitType
 };
 
 
