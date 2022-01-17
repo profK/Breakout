@@ -17,7 +17,7 @@ void Paddle::Update(long deltaTime)
 {
     bool leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
     bool rightArrow = Keyboard::isKeyPressed(Keyboard::Right);
-    bool space = Keyboard::isKeyPressed(Keyboard::Space);
+    
     if (leftArrow && !rightArrow) {
         setPosition(getPosition() + Vector2f(-movePPS * deltaTime, 0));
     }

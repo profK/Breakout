@@ -159,6 +159,7 @@
     <ClCompile Include="paddle.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="ShootMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="paddle.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="Score.h" />
+    <ClInclude Include="ShootMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

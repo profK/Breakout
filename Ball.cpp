@@ -9,7 +9,7 @@ Ball::Ball(b2World& world, float radius, Vector2f startPosition): CircleShape(ra
 	PhysicsObject(world,BallType,startPosition,Vector2f(radius*2,radius*2)),
 	radius(radius)
 {
-	visible = true; // start showing ball
+	visible = false; // start not showing ball
 	setRotation(30);
 }
 
@@ -51,5 +51,6 @@ void Ball::Reset(Vector2f position, float angleDeg, float speed)
 	impulse *= speed;
 	SetScaledPosition(position);
 	body->ApplyLinearImpulse(impulse, body->GetWorldCenter(),true);
+
 }
 

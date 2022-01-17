@@ -11,6 +11,7 @@
 #include "CollisionHandler.h"
 #include "Score.h"
 #include "BottomBoundary.h"
+#include "ShootMessage.h"
 
 using namespace sf;
 using namespace std;
@@ -88,6 +89,7 @@ int main()
         exit(1);
     }
     Score score(Vector2f(400, 10), font, 30);
+    ShootMessage shootMessage(font,800,600);
     AddWall(world,score, bricks);
 
     Paddle paddle(world,Color::White,Vector2f(400,550),Vector2f(60,20));
@@ -99,7 +101,7 @@ int main()
     Clock clock;
     Time lastTime = clock.getElapsedTime();
     
-    ball.Reset(BallStart, (rand0to1()*90)-45, BallSpeed); // -80 to 80
+   
     while (window.isOpen())
     {
         sf::Event event;
@@ -117,6 +119,10 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            else if (!ball.IsVisible() && Keyboard::isKeyPressed(Keyboard::Space)) {
+                ball.Reset(BallStart, (rand0to1() * 90) - 45, BallSpeed); // -80 to 80
+                ball.Show(true);
+            }
         }
         // game state update
         // update paddle
@@ -146,6 +152,9 @@ int main()
         window.draw(paddle);
         if (ball.IsVisible()) {
             window.draw(ball);
+        }
+        else {
+            window.draw(shootMessage);
         }
        
         window.draw(score);
