@@ -11,6 +11,10 @@ Ball::Ball(b2World& world, float radius, Vector2f startPosition): CircleShape(ra
 {
 	visible = false; // start not showing ball
 	setRotation(30);
+	//load audio
+	beep.loadFromFile("audio/beep.wav");
+	boop.loadFromFile("audio/boop.wav");
+	drain.loadFromFile("audio/balldrain.wav");
 }
 
 void Ball::Update()
@@ -30,16 +34,27 @@ bool Ball::IsVisible()
 }
 
 void Ball::CollidedWith(PhysicsObject& otherObject) {
-
-	if (otherObject.GetObjType() == BrickType) {
-		//increase speed
+	if (IsVisible()) { // no actions if deactivated}
 		Vector2f direction = GetMotionDirection();
 		Vector2f force(direction.x * 0.01, direction.y * 0.01);
-		ApplyScaledForce(force);
-	}
-	else if (otherObject.GetObjType() == ExitType) {
-		visible = false;
-		body->SetLinearVelocity(b2Vec2(0, 0));
+		switch (otherObject.GetObjType()) {
+		case BrickType:
+			//increase speed	
+			ApplyScaledForce(force);
+			sound.setBuffer(beep);
+			sound.play();
+			break;
+		case WallType:
+		case PaddleType:
+			sound.setBuffer(boop);
+			sound.play();
+			break;
+		case ExitType:
+			visible = false;
+			body->SetLinearVelocity(b2Vec2(0, 0));
+			sound.setBuffer(drain);
+			sound.play();
+		}
 	}
 	
 }

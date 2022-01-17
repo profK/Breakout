@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include "Box2D/Box2D.h"
 #include "PhysicsObject.h"
+#include "SFML/Audio/SoundBuffer.hpp"
+#include "SFML/Audio/Sound.hpp"
 
 using namespace sf;
 
@@ -11,6 +13,10 @@ class Ball :
 private:
     float radius;
     bool visible;
+    SoundBuffer beep;
+    SoundBuffer boop;
+    SoundBuffer drain;
+    Sound sound; // used to play a buffer
 
 
 public:

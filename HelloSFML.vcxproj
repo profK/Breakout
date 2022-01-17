@@ -181,6 +181,11 @@
       <DeploymentContent>true</DeploymentContent>
     </Font>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="audio\balldrain.wav" />
+    <Media Include="audio\beep.wav" />
+    <Media Include="audio\boop.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\Box2D.2.3.0\build\native\Box2D.targets" Condition="Exists('packages\Box2D.2.3.0\build\native\Box2D.targets')" />

@@ -87,4 +87,15 @@
   <ItemGroup>
     <Font Include="C:\Users\jpkessel\Downloads\arial\arial.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="audio\balldrain.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="audio\boop.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="audio\beep.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>
