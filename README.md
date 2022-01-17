@@ -12,3 +12,5 @@ Its is a demo and intended as sampel code rather then a polished and shippable g
 
 I wrote this as an example for my C++ students.  Its is free and open under MIT license.
 It is based on SFML and Box2D which may have their own license requirements.
+
+Note: Now has audio.  Documetation in progress.
