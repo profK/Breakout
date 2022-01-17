@@ -1,4 +1,4 @@
-# Breakout a simple SFML/Box2D C++ game
+# Breakout: a simple SFML/Box2D C++ game
 It uses the SFML_VS2019 and Box2D native nuget packages.
 
 This is a basic implementation of a Breakout game usinf SFML anbd Box2D.
