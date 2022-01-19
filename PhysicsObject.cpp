@@ -5,10 +5,10 @@ using namespace std;
 
 const float boxScaleFactor= 100;
 
-PhysicsObject::PhysicsObject(b2World& world, ObjectType otype, Vector2f startPosition, Vector2f size):
+PhysicsObject::PhysicsObject(b2World& world, ObjectType otype, Vector2f centerPosition, Vector2f size):
 	world(world)
 {
-	startPosition /= boxScaleFactor;
+	centerPosition /= boxScaleFactor;
 	size /= boxScaleFactor;
 	objType = otype;
 	// setup phsics
@@ -19,7 +19,7 @@ PhysicsObject::PhysicsObject(b2World& world, ObjectType otype, Vector2f startPos
 	else {
 		bodyDef.type = b2_staticBody;
 	}
-	bodyDef.position.Set(startPosition.x+(size.x/2), startPosition.y+(size.y/2));
+	bodyDef.position.Set(centerPosition.x+(size.x/2), centerPosition.y+(size.y/2));
 	bodyDef.linearDamping = 0.0f;
 
 	body = world.CreateBody(&bodyDef);
@@ -66,13 +66,13 @@ void PhysicsObject::CollidedWith(PhysicsObject& otherObject)
 	cout << endl;
 }
 
-Vector2f PhysicsObject::GetScaledPosition()
+Vector2f PhysicsObject::GetScaledCenterPosition()
 {
 	b2Vec2 pos = body->GetPosition();
 	return Vector2f(pos.x * boxScaleFactor, pos.y * boxScaleFactor);
 }
 
-void PhysicsObject::SetScaledPosition(Vector2f pos)
+void PhysicsObject::SetScaledCenterPosition(Vector2f pos)
 {
 	b2Vec2 bPos = b2Vec2(pos.x / boxScaleFactor,pos.y / boxScaleFactor);
 	body->SetTransform(bPos, 0);

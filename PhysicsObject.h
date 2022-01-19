@@ -24,8 +24,8 @@ public:
 	ObjectType GetObjType();
 	void PrintObjectTypeName();
 	virtual void CollidedWith(PhysicsObject& otherObject);
-	Vector2f GetScaledPosition();
-	void SetScaledPosition(Vector2f pos);
+	Vector2f GetScaledCenterPosition();
+	void SetScaledCenterPosition(Vector2f pos);
 	Vector2f GetMotionDirection();
 	void ApplyScaledForce(Vector2f forceVector);
 

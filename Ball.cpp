@@ -19,7 +19,7 @@ Ball::Ball(b2World& world, float radius, Vector2f startPosition): CircleShape(ra
 
 void Ball::Update()
 {
-	Vector2f pos = GetScaledPosition();
+	Vector2f pos = GetScaledCenterPosition();
 	setPosition(pos);
 }
 
@@ -64,7 +64,7 @@ void Ball::Reset(Vector2f position, float angleDeg, float speed)
 	setPosition(position);
 	b2Vec2 impulse = b2Vec2(cos(angleDeg * M_PI / 180), sin(angleDeg * M_PI / 180));
 	impulse *= speed;
-	SetScaledPosition(position);
+	SetScaledCenterPosition(position);
 	body->ApplyLinearImpulse(impulse, body->GetWorldCenter(),true);
 
 }

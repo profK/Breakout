@@ -27,5 +27,5 @@ void Paddle::Update(long deltaTime)
     Vector2f sfmlPos = getPosition();
     Vector2f sfmlSize = getSize();
 
-    SetScaledPosition(Vector2f(sfmlPos.x + (sfmlSize.x/2), sfmlPos.y));
+    SetScaledCenterPosition(Vector2f(sfmlPos.x + (sfmlSize.x/2), sfmlPos.y));
 }
