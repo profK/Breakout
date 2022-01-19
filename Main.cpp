@@ -142,7 +142,7 @@ int main()
     }
     // The score and Shoot message objects are both Text objects.
     // See their individual files for details
-    Score score(Vector2f(400, 10), font, 30);
+    Score score(Vector2f(400, 10), font);
     ShootMessage shootMessage(font,800,600);
 
     // call the AddWall procedure to make the brick grid

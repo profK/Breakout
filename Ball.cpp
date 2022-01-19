@@ -6,8 +6,7 @@
 
 
 Ball::Ball(b2World& world, float radius, Vector2f startPosition): CircleShape(radius),
-	PhysicsObject(world,BallType,startPosition,Vector2f(radius*2,radius*2)),
-	radius(radius)
+	PhysicsObject(world,BallType,startPosition,Vector2f(radius*2,radius*2))
 {
 	visible = false; // start not showing ball
 	setRotation(30);

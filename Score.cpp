@@ -1,6 +1,6 @@
 #include "Score.h"
 
-Score::Score(Vector2f position, Font &fnt, int size)
+Score::Score(Vector2f position, Font &fnt)
 {
 	setFont(fnt);
 	//setCharacterSize(size);

@@ -154,7 +154,6 @@
     <ClCompile Include="Boundary.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="CollisionHandler.cpp" />
-    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="paddle.cpp" />
     <ClCompile Include="PhysicsObject.cpp" />
@@ -167,7 +166,6 @@
     <ClInclude Include="Boundary.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="CollisionHandler.h" />
-    <ClInclude Include="Gun.h" />
     <ClInclude Include="paddle.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="Score.h" />
