@@ -24,8 +24,8 @@ public:
 	/// <param name="color">The color of the rectangle</param>
 	/// <param name="size">The width and height of the rectangle</param>
 	/// <param name="position">The starting top left corner of the paddle</param>
-	Paddle(b2World& world, Color color, Vector2f size, Vector2f position);
 	/// <summary>
+	Paddle(b2World& world, Color color, Vector2f size, Vector2f position);
 	/// THis method is called by the game when a paddle collides with another PhysicsObject
 	/// </summary>
 	/// <param name="otherObject">The object that collided with the paddle</param>
