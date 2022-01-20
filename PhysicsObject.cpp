@@ -19,7 +19,7 @@ PhysicsObject::PhysicsObject(b2World& world, ObjectType otype, Vector2f centerPo
 	else {
 		bodyDef.type = b2_staticBody;
 	}
-	bodyDef.position.Set(centerPosition.x+(size.x/2), centerPosition.y+(size.y/2));
+	bodyDef.position.Set(centerPosition.x, centerPosition.y);
 	bodyDef.linearDamping = 0.0f;
 
 	body = world.CreateBody(&bodyDef);

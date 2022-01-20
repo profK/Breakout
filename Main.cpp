@@ -202,7 +202,7 @@ int main()
         if (!ball.IsVisible() && Keyboard::isKeyPressed(Keyboard::Space)) {
             // this sets the position, angle of motion, and speed to start
             // the reset code sets both physics and graphics positions to keep them in-sync
-            ball.Reset(BallStart, (rand0to1() * 90) - 45, BallSpeed); // -80 to 80
+            ball.Reset(BallStart, (rand0to1() * 90) + 225, BallSpeed); // -80 to 80
             // this makes the ball visible
             ball.Show(true);
         }

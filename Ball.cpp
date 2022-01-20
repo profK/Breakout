@@ -5,12 +5,16 @@
 #include "PhysicsObject.h"
 
 
-// see header file for docs
+/// <summary>
+/// Ball object constructor
+/// </summary>
+/// <param name="world">A reference to the Box2D world that owns all our physics objects</param>
+/// <param name="radius">The radius of the ball in pixels</param>
+/// <param name="startPosition">The position of the center of the ball on the playign field</param>
 Ball::Ball(b2World& world, float radius, Vector2f startPosition): CircleShape(radius),
-	PhysicsObject(world,BallType,startPosition,Vector2f(radius*2,radius*2))
+	PhysicsObject(world,BallType,startPosition-Vector2f(radius * 2, radius * 2),Vector2f(radius*2,radius*2))
 {
 	visible = false; // start not showing ball
-	setRotation(30);
 	//load audio
 	// ball is in charge of playing sound effects on collision
 	beep.loadFromFile("audio/beep.wav");
@@ -18,28 +22,40 @@ Ball::Ball(b2World& world, float radius, Vector2f startPosition): CircleShape(ra
 	drain.loadFromFile("audio/balldrain.wav");
 }
 
-// see header file for docs
+/// <summary>
+/// Called to update the ball's position for a new frame.  Position is controlled
+/// by its Box2D physics body
+/// </summary>
 void Ball::Update()
 {
-	//This gets the position in piel coords from Box2D
+	//This gets the position in pixel coords from Box2D
 	//and sets it in the CircleShape for drawing
 	Vector2f pos = GetScaledCenterPosition();
 	setPosition(pos);
 }
 
-// see header file for docs
+/// <summary>
+/// Sets the ball active and visible (true) or inactive and invisible (false)
+/// </summary>
+/// <param name="b">true if active and visible, false if not</param>
 void Ball::Show(bool b)
 {
 	visible = b;
 }
 
-// see header file for docs
+/// <summary>
+/// Gets the last value set with Show
+/// </summary>
+/// <returns>true if active and visible, false if not</returns>
 bool Ball::IsVisible()
 {
 	return visible;
 }
 
-// see header file for docs
+/// <summary>
+/// Called by the physics system when the ball collides with another PhysicsObject
+/// </summary>
+/// <param name="otherObject"></param>
 void Ball::CollidedWith(PhysicsObject& otherObject) {
 	// if ball is invisible then its also inactive, so dont do any collision logic
 	if (IsVisible()) { // no actions if deactivated
@@ -72,14 +88,19 @@ void Ball::CollidedWith(PhysicsObject& otherObject) {
 	
 }
 
-// see header file for docs
+/// <summary>
+/// Positions the ball and resets its initial movement vector
+/// </summary>
+/// <param name="position">where the center of the ball shoudl be in pixel coords</param>
+/// <param name="angleDeg">the angle of starting motion</param>
+/// <param name="speed">the speed of starting motion</param>
 void Ball::Reset(Vector2f position, float angleDeg, float speed) 
 {
-	setPosition(position);
+	setPosition(position); //set SFML position
 	// get a randomized starting direction
-	b2Vec2 impulse = b2Vec2(cos(angleDeg * M_PI / 180), sin(angleDeg * M_PI / 180));
-	impulse *= speed; // set the starting speed
-	SetScaledCenterPosition(position); // put the ball physics bodyat the starting location
+	b2Vec2 impulse = b2Vec2(cos(angleDeg * M_PI / 180), sin(angleDeg * M_PI / 180)); // create a random strating direction
+	impulse *= speed; // set the starting speed 
+	SetScaledCenterPosition(position); // put the ball physics body at the starting location
 	body->ApplyLinearImpulse(impulse, body->GetWorldCenter(),true); // apply the starting force
 }
 
