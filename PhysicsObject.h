@@ -19,6 +19,12 @@ enum ObjectType {
 /// This is a base class for all objects that have to either move with forces
 /// and/or detect collisions with other objects.  It uyses a rectangular
 /// bounding box as the physics body for collision and force application
+/// 
+/// It provides glue between SFML and he Box2D system.  The msot important
+/// part of that is scaling.  Box2D's default coordinate system is 1.0 = 1m.
+/// In that scale an 800x600 field is 8 footballfields wide and 6 football fields long.
+/// Thsi results in very slow moving object as they are moving a great distance.
+/// Scaling that down is essential to provide fast moving game play.
 /// </summary>
 class PhysicsObject
 {
@@ -71,8 +77,8 @@ public:
 	/// to an identically scaled up version of the pixel position
 	/// </summary>
 	/// <param name="pos">The pixel position of the center of the scaled body</param>
-	void SetScaledCenterPosition(Vector2f pos);
 	/// <summary>
+	void SetScaledCenterPosition(Vector2f pos);
 	///  This returns a normalized vector that represents the current direction of motion of
 	///  the phsyics body.
 	/// </summary>

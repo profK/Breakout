@@ -98,7 +98,7 @@ void Ball::Reset(Vector2f position, float angleDeg, float speed)
 {
 	setPosition(position); //set SFML position
 	// get a randomized starting direction
-	b2Vec2 impulse = b2Vec2(cos(angleDeg * M_PI / 180), sin(angleDeg * M_PI / 180)); // create a random strating direction
+	b2Vec2 impulse = b2Vec2(cos(angleDeg * M_PI / 180), sin(angleDeg * M_PI / 180)); // create a starting direction vector
 	impulse *= speed; // set the starting speed 
 	SetScaledCenterPosition(position); // put the ball physics body at the starting location
 	body->ApplyLinearImpulse(impulse, body->GetWorldCenter(),true); // apply the starting force
