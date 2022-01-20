@@ -5,7 +5,7 @@ using namespace std;
 
 const float boxScaleFactor= 100;
 
-#define DEBUG_COLLISION  true
+#define DEBUG_COLLISION  false
 
 /// <summary>
 /// This is the constructor for a PhysicsObject.  It si compolex because it has to set up all the

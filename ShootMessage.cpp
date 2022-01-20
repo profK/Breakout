@@ -1,13 +1,11 @@
 #include "ShootMessage.h"
 
 /// <summary>
-/// This is a convenience object for drawing the "Press space bar..." message
-/// It know how yo psotion itself on screen.
-/// Otherwise its just a 
+/// The constructor
 /// </summary>
-/// <param name="fnt"></param>
-/// <param name="screenWidth"></param>
-/// <param name="screenHeight"></param>
+/// <param name="fnt">A reference to a font to use to draw the text</param>
+/// <param name="screenWidth">width of the screen</param>
+/// <param name="screenHeight">height of the screen</param>
 ShootMessage::ShootMessage(Font &fnt, int screenWidth, int screenHeight)
 {
 	setFont(fnt);
