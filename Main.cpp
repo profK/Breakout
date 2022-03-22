@@ -18,8 +18,17 @@
 #include "BottomBoundary.h"
 #include "ShootMessage.h"
 
+//conditional compilation
+#define BOUNDARIES true
+#define TEXT true // needs to be actviated before below so text size can be measured
+#define BRICKS true
+#define PADDLE true
+
+#define BALL true
+
 using namespace sf;  // SFML namespace
 using namespace std; // standard name space
+
 
 // These constants define the size and layout of bricks
 const int brick_width = 60;  //width of one brick
@@ -126,14 +135,18 @@ int main()
     // adde collision logic
     CollisionHandler collisionHandler(world);
     // add collision bounds at edges of screen
+#if BOUNDARIES
     Boundary top = Boundary(world, Color::Green, Vector2f( 0, 0), Vector2f(800, 6)); //top
     BottomBoundary bottom = BottomBoundary(world, Color::Green, Vector2f(0, 594),Vector2f( 800, 6)); // bottom
     Boundary left(world,Color::Green,Vector2f( 0, 0), Vector2f( 6, 600)); //left
     Boundary right(world, Color::Green, Vector2f(794, 0), Vector2f( 6, 600)); // right
-    
+#endif    
     // add bricks
+#if BRICKS
     list<Brick*> bricks;
     list<Brick*> removalList; // needed for when they are hit, see below
+#endif
+#if TEXT
     // this loads the arial font for text
     Font font;
     if (!font.loadFromFile("arial.ttf")) {
@@ -144,13 +157,19 @@ int main()
     // See their individual files for details
     Score score(Vector2f(400, 10), font);
     ShootMessage shootMessage(font,800,600);
-
+#endif
     // call the AddWall procedure to make the brick grid
+#if BRICKS
     AddWall(world,score, bricks);
+#endif
 
     // There is one paddle and one ball, each defined in their own files
+#if PADDLE
     Paddle paddle(world,Color::White,Vector2f(400,550),Vector2f(60,20));
+#endif
+#if BALL
     Ball ball(world,8, BallStart);
+#endif
  
 
     // Note, the next line is just a change in units from milliseconds to a fraction of a second
@@ -172,6 +191,8 @@ int main()
         /// 
         /// </summary>
         /// <returns></returns>
+        /// 
+#pragma region // phsyics calculation
         Time currentTime = clock.getElapsedTime();
         long elapsedTimeMS = (currentTime.asMilliseconds() - lastTime.asMilliseconds());
         //limit to 60fps
@@ -189,13 +210,17 @@ int main()
         // this updates the Box2D physics engine and recalulates the positions and collisions
         // of objects it controls
         world.Step(((float32)frameMinMS) / 1000.0, velocityIterations, positionIterations);
+#pragma endregion        
         // the loop below reads all the events the system has sent us.
         // the only one we care about is window closing
+
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+#pragma region //start ball
+#if BALL && TEXT
         // This next code starts the ball movign when the
         // space bar is pressed.  It only works if the ball isnt currently being
         // displayed, otherwise you could cheat and reset the ball mid play!
@@ -206,15 +231,21 @@ int main()
             // this makes the ball visible
             ball.Show(true);
         }
-
+#endif
+#pragma endregion
+#pragma region // updates
         // update paddle
         // This tells the paddle hwo much time has passed (in this case fixed at 1/30 of a second)
         // the paddle combines that with keyboard input and updates both its
         // drawn position and its physics position
+#if PADDLE
         paddle.Update(elapsedTimeMS);
+#endif
         // tick physics
+#if BALL
         ball.Update(); // update visible ball posituon from physics
-
+#endif
+#if BRICKS
         //The next block updates the bricks.  bricks dont move but can be destroyed
         //and need to be removed from the playfield.
         // you cannot remove elements from a list in the midst of its traversal,
@@ -228,19 +259,28 @@ int main()
         for (auto bPtr : removalList) {
             bricks.remove(bPtr); // note that we are looping on one list to remove its members from
         }                        // a different list
-
+#endif
+#pragma endregion
+#pragma region //render
         // game state render
         // having updated bricks and ball, we now draw the new frame
         window.clear(); // remove the last frame from the frame buffer
+#if BRICKS
         for (auto bPtr : bricks) { // draw the remaining bricks
             window.draw(*bPtr);
         }
+#endif
         // draw the window borders
+#if BOUNDARIES
         window.draw(top);
         window.draw(bottom);
         window.draw(left);
         window.draw(right);
+#endif
+#if PADDLE
         window.draw(paddle);
+#endif
+#if BALL && TEXT
         // IF the ball is in play then draw it
         if (ball.IsVisible()) {
             window.draw(ball);
@@ -250,8 +290,10 @@ int main()
         }
        
         window.draw(score); // draw the score at the top of the screen
+#endif
         window.display();  // make all the draws visible
-        
+
+#pragma endregion       
     }
 
     return 0; // no error
